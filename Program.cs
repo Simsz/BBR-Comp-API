@@ -7,7 +7,7 @@ using BBRC.Common.GameRules;
 class Program {
     static void Main(string[] args) {
         var listener = new ServerListener < MyPlayer,MyGameServer > ();
-        listener.Start(29294);
+        listener.Start(27099);
 
         Thread.Sleep(-1);
     }
