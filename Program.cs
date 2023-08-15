@@ -65,19 +65,29 @@ class MyGameServer: GameServer < MyPlayer > {
     if (Rules.weaponBans.IsBanned(WeaponPrimary)) {
       player.Message($"{WeaponPrimary} is banned");
       WeaponPrimary = null;
+      player.SetPrimaryWeapon(default,0);
     }
     if (Rules.weaponBans.IsBanned(WeaponSecondary)) {
       player.Message($"{WeaponSecondary} is banned");
       WeaponSecondary = null;
+      player.SetSecondaryWeapon(default,0);
     }
     if (Rules.gadgetBans.IsBanned(HeavyGadget)) {
       player.Message($"{HeavyGadget} is banned");
       HeavyGadget = null;
+      player.SetHeavyGadget(default,0);
     }
     if (Rules.gadgetBans.IsBanned(LightGadget)) {
       player.Message($"{LightGadget} is banned");
       LightGadget = null;
+      player.SetLightGadget(default,0);
     }
+    if (Rules.gadgetBans.IsBanned(Gadgets.ImpactGrenade)) {
+      player.Message($"{LightGadget} is banned");
+      LightGadget = null;
+      player.SetThrowable(default,0);
+    }
+    
     var (isBanned, bannedItems) = await Rules.wearingsBans.IsBanned(Wearings);
     if (isBanned) {
       if (bannedItems.Count == 0) {
