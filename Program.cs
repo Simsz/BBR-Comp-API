@@ -86,22 +86,26 @@ class MyGameServer: GameServer < MyPlayer > {
     // TODO: make sure that this works
     if (Rules.weaponBans.IsBanned(WeaponPrimary)) {
       player.Message($"{WeaponPrimary} is banned");
+      player.Kill();
       WeaponPrimary = null;
       //player.SetPrimaryWeapon(default,0);
     }
     if (Rules.weaponBans.IsBanned(WeaponSecondary)) {
       player.Message($"{WeaponSecondary} is banned");
       WeaponSecondary = null;
+      player.Kill();
       //player.SetSecondaryWeapon(default,0);
     }
     if (Rules.gadgetBans.IsBanned(HeavyGadget)) {
       player.Message($"{HeavyGadget} is banned");
       HeavyGadget = null;
+      player.Kill();
       //player.SetHeavyGadget(default,0);
     }
     if (Rules.gadgetBans.IsBanned(LightGadget)) {
       player.Message($"{LightGadget} is banned");
       LightGadget = null;
+      player.Kill();
       //player.SetLightGadget(default,0);
     }
     
