@@ -24,7 +24,6 @@ class MyGameServer: GameServer < MyPlayer > {
     public static BBRCGameRules Rules = new BBRCGameRules();
 
   public override async Task OnConnected() {
-    serverBanListSet();
     ForceStartGame();
     MapRotation.SetRotation("TensaTown"); // Specify your map name here.
     GamemodeRotation.SetRotation("CONQ");
@@ -61,32 +60,51 @@ class MyGameServer: GameServer < MyPlayer > {
     Gadget LightGadget = request.Loadout.LightGadget;
     PlayerWearings Wearings = request.Wearings;
 
+    //Weapon Bans
+    Rules.weaponBans.BanWeapon(Weapons.ScorpionEVO);
+    Rules.weaponBans.BanWeapon(Weapons.FAL);
+    Rules.weaponBans.BanWeapon(Weapons.KrissVector);
+    //Gadget Bans
+    Rules.gadgetBans.BanGadget(Gadgets.C4);
+    Rules.gadgetBans.BanGadget(Gadgets.SuicideC4);
+    Rules.gadgetBans.BanGadget(Gadgets.AntiPersonnelMine);
+    Rules.gadgetBans.BanGadget(Gadgets.AntiVehicleMine);
+    Rules.gadgetBans.BanGadget(Gadgets.Claymore);
+    Rules.gadgetBans.BanGadget(Gadgets.Rpg7Fragmentation);
+    Rules.gadgetBans.BanGadget(Gadgets.Rpg7HeatExplosive);
+    Rules.gadgetBans.BanGadget(Gadgets.Rpg7Pgo7Fragmentation);
+    Rules.gadgetBans.BanGadget(Gadgets.Rpg7Pgo7HeatExplosive);
+    Rules.gadgetBans.BanGadget(Gadgets.Rpg7Pgo7Tandem);
+    Rules.gadgetBans.BanGadget(Gadgets.ImpactGrenade);
+    //Clothing Bans
+    //Rules.wearingsBans.BanWearings(PlayerWearingsList.ExoArmor);
+    //Rules.wearingsBans.BanWearings(PlayerWearingsList.HeavyArmor);
+    //Rules.wearingsBans.BanWearings(PlayerWearingsList.HeavyHelmet);
+    //Rules.wearingsBans.BanWearings(PlayerWearingsList.ExoHelmet);
+    //Rules.wearingsBans.BanWearings(PlayerWearingsList.LightHelmet);
+
     // TODO: make sure that this works
     if (Rules.weaponBans.IsBanned(WeaponPrimary)) {
       player.Message($"{WeaponPrimary} is banned");
       WeaponPrimary = null;
-      player.SetPrimaryWeapon(default,0);
+      //player.SetPrimaryWeapon(default,0);
     }
     if (Rules.weaponBans.IsBanned(WeaponSecondary)) {
       player.Message($"{WeaponSecondary} is banned");
       WeaponSecondary = null;
-      player.SetSecondaryWeapon(default,0);
+      //player.SetSecondaryWeapon(default,0);
     }
     if (Rules.gadgetBans.IsBanned(HeavyGadget)) {
       player.Message($"{HeavyGadget} is banned");
       HeavyGadget = null;
-      player.SetHeavyGadget(default,0);
+      //player.SetHeavyGadget(default,0);
     }
     if (Rules.gadgetBans.IsBanned(LightGadget)) {
       player.Message($"{LightGadget} is banned");
       LightGadget = null;
-      player.SetLightGadget(default,0);
+      //player.SetLightGadget(default,0);
     }
-    if (Rules.gadgetBans.IsBanned(Gadgets.ImpactGrenade)) {
-      player.Message($"{LightGadget} is banned");
-      LightGadget = null;
-      player.SetThrowable(default,0);
-    }
+    
     
     var (isBanned, bannedItems) = await Rules.wearingsBans.IsBanned(Wearings);
     if (isBanned) {
@@ -137,32 +155,6 @@ class MyGameServer: GameServer < MyPlayer > {
     return request;
   }
 
-  public static void serverBanListSet(){
-
-    //Weapon Bans
-    Rules.weaponBans.BanWeapon(Weapons.ScorpionEVO);
-    Rules.weaponBans.BanWeapon(Weapons.FAL);
-    Rules.weaponBans.BanWeapon(Weapons.KrissVector);
-    //Gadget Bans
-    Rules.gadgetBans.BanGadget(Gadgets.C4);
-    Rules.gadgetBans.BanGadget(Gadgets.SuicideC4);
-    Rules.gadgetBans.BanGadget(Gadgets.AntiPersonnelMine);
-    Rules.gadgetBans.BanGadget(Gadgets.AntiVehicleMine);
-    Rules.gadgetBans.BanGadget(Gadgets.Claymore);
-    Rules.gadgetBans.BanGadget(Gadgets.Rpg7Fragmentation);
-    Rules.gadgetBans.BanGadget(Gadgets.Rpg7HeatExplosive);
-    Rules.gadgetBans.BanGadget(Gadgets.Rpg7Pgo7Fragmentation);
-    Rules.gadgetBans.BanGadget(Gadgets.Rpg7Pgo7HeatExplosive);
-    Rules.gadgetBans.BanGadget(Gadgets.Rpg7Pgo7Tandem);
-    Rules.gadgetBans.BanGadget(Gadgets.ImpactGrenade);
-    //Clothing Bans
-    Rules.wearingsBans.BanWearings(PlayerWearingsList.ExoArmor);
-    Rules.wearingsBans.BanWearings(PlayerWearingsList.HeavyArmor);
-    Rules.wearingsBans.BanWearings(PlayerWearingsList.HeavyHelmet);
-    Rules.wearingsBans.BanWearings(PlayerWearingsList.ExoHelmet);
-    Rules.wearingsBans.BanWearings(PlayerWearingsList.LightHelmet);
-
-  }
 }
 
 
